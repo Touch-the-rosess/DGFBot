@@ -1,0 +1,28 @@
+{
+
+  "manifest_version": 2,
+  "name": "DGFBot",
+  "version": "1.0",
+
+  "description": "This is a bot for game Dream Girlfiend",
+
+  "icons": {"96": "icons/DreamGirlfriend.png"},
+  
+  "permissions": [
+    "activeTab",
+	"tabs",
+	"webNavigation",
+	"storage"
+  ],
+   
+  "background":{
+    "scripts":["background-script.js"]
+  },
+  
+  "browser_action": {
+    "default_icon": "icons/DreamGirlfriend.png",
+    "default_title": "DreamGirlfrendBot",
+    "default_popup": "popup/popup.html"
+  }
+
+}
