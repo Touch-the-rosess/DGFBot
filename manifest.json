@@ -16,13 +16,13 @@
   ],
    
   "background":{
-    "scripts":["background-script.js"]
+    "scripts":["Functionality/background-script.js"]
   },
   
   "browser_action": {
     "default_icon": "icons/DreamGirlfriend.png",
     "default_title": "DreamGirlfrendBot",
-    "default_popup": "popup/popup.html"
+    "default_popup": "Functionality/popup/PopupPage/popup.html"
   }
 
 }

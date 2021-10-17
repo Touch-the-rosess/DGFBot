@@ -26,9 +26,9 @@ function BeautifyFunction()
 
 function LikeChatScript()
 {
-	browser.tabs.executeScript({file: "scripts/Init.js",allFrames: false});
+	browser.tabs.executeScript({file: "../../scripts/Init.js",allFrames: false});
 	//browser.tabs.executeScript({file: "scripts/LikeChat.js",allFrames: false});
-	setTimeout(() => { browser.tabs.executeScript({file: "scripts/LikeTalk.js",allFrames: false});window.close(); }, 1000);
+	setTimeout(() => { browser.tabs.executeScript({file: "../../scripts/LikeTalk.js",allFrames: false});window.close(); }, 1000);
 	//setTimeout(function(){ browser.tabs.executeScript({file: "scripts/LikeChat.js"}); }, 500);
     //this is some kind of wait,
 	//window.close();
