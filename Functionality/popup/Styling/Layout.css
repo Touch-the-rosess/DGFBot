@@ -1,0 +1,75 @@
+.HeaderTextBlue   {text-align: center;font-weight: bold;font-size: 15px;color:#34beff;font-family: "Lucida Console", "Courier New", monospace;}
+.HeaderTextPink   {text-align: center;font-weight: bold;font-size: 15px;color:#ff4d8a;font-family: "Lucida Console", "Courier New", monospace;}
+
+
+/*.MyBody {
+	text-align: left;
+}*/
+.alltxt  {
+	font-weight: bold;
+	background: -webkit-linear-gradient(#ffd341, #ffae08);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color:transparent;
+	float:left;
+	/*font-family: "Brush Script MT", cursive;*/
+	letter-spacing: 0.22em;
+	text-decoration: none;
+	padding-left: 0;
+
+}
+
+.allBox{
+	display: block;
+	height:23px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+}
+
+.allBtn {
+	font-weight: bold;
+  	background-color: #ffd341;
+	color: #000;/*#82c3db;*/
+  	border-radius: 12px;
+  	border: transparent;
+  	font-size: 11px;
+  	height: 23px;
+	width: 42px;
+	box-shadow: 0 2px #999;
+	float: right;
+}
+
+.allBtn:active {
+  background-color: #ffae08;
+  box-shadow: 0 1px #666;
+  transform: translateY(1px);
+}
+
+.text1 {
+	float: left;
+}
+
+.Alert{
+	padding-left: 5px;
+	font-size: 20px;
+	padding-right: 5px;
+	line-height: 1.2;
+	padding-bottom: 5px;
+	letter-spacing: 0.202em;
+	background: -webkit-linear-gradient(#ffd341, #ffae08);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color:transparent;
+}
+
+.backbutton{
+	background-color: rgba(153, 204, 255,0.2);
+	text-decoration: none;
+	padding-left: 40%;
+	padding-right: 50%;
+	border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+}
+/*	END of Back button*/
+/*	END of beautify help page*/
+

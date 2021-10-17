@@ -1,46 +1,44 @@
 <html>
   <head>
     <meta charset="utf-8">
-	<link rel="stylesheet" href="../Styling/AllStyling.css"/>
+	<link rel="stylesheet" href="../Styling/Layout.css"/>
+	<link rel="stylesheet" href="../Styling/Body.css"/>
+	<link rel="stylesheet" href="../Styling/Switch.css"/>
 	
   </head>
   
 <!You can asign multiple class to an element element class="firstClass secondClass">
 
 <body>
-	<div id="popup-content" class = "MyStuff"> 
-		<div id = "MyHeader">
+	<div id = "MyHeader">
 			<div class = "HeaderTextBlue">Dream </div>
 			<div class = "HeaderTextPink">Girlfriend</div> 
-		</div>
+	</div>
 
-		<div class = "MyBody" id = "MyBody">
+	<div  id = "MyBody"> <!class = "MyBody">
+		<dir id = "Box1" class = "allBox"><!That will be beautify script>
+			<a class = "alltxt" href = "../PopupSubpages/BeautifySubpage/BeautifySubpage.html">Beautify</a>
+			<label class="switch">
+				<input id = "Checkbox1" type="checkbox">
+				<span class="slider round"></span>
+			</label>
+		</dir>
 		
-			<dir id = "Box1" class = "allBox"><!That will be beautify script>
-				<a class = "alltxt" href = "../PopupSubpages/BeautifySubpage/BeautifySubpage.html">Beautify</a>
-				<label class="switch">
-					<input id = "Checkbox1" type="checkbox">
-					<span class="slider round"></span>
-				</label>
-			</dir>
-			
-			<dir id = "Box2" class = "allBox"><!that will be like and chat script> 
-				<div class = "alltxt">Like And Chat Script</div>
-				<button id = "Button1" class = 'allBtn' type="Button">Start</button> 
-			</dir>
-			
-			<dir id = "Box3" class = "allBox"><!jsut test>
-				<div class = "alltxt">test</div>
-				<label class="switch">
-					<input id = "test" type="checkbox">
-					<span class="slider round"></span>
-				</label>
-			</dir>
-			
+		<dir id = "Box2" class = "allBox"><!that will be like and chat script> 
+			<div class = "alltxt">Like And Chat Script</div>
+			<button id = "Button1" class = 'allBtn' type="Button">Start</button> 
+		</dir>
+		
+		<div id = "Box3" class = "allBox"><!jsut test>
+			<div class = "alltxt">test</div>
+			<label class="switch">
+				<input id = "test" type="checkbox">
+				<span class="slider round"></span>
+			</label>
 		</div>
-	<div id = "Alert" class = 'Alert'>You need to be in Dream Girlfriend site for extension working :3</div>
-    </div>
-  
+		
+		<div id = "Alert" class = 'Alert'>You need to be in Dream Girlfriend site for extension working :3</div>
+	</div>
  <script src = "popupApearance.js"></script>
  <script src = "popupFunctionality.js"></script>
 </body>

@@ -1,0 +1,15 @@
+html, body { /*Html,body - is the size of my popup. And it will be aplyed to all other pages opened with my popup*/
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+    background-image: url("../Image/bg.jpg");
+	background-repeat: repeat;
+    background-position: center;
+	background-size: 300px 9px;
+	border-radius:10px;
+  }
+  /*
+.MyStuff {
+    height:auto;width:auto;
+	
+}*/
