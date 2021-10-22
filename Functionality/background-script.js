@@ -8,11 +8,10 @@ browser.runtime.onMessage.addListener(handleMessage);
 function handleMessage(request, sender, sendResponse) {
 	var WhoSummoned = request.sender;
 	console.log("Message from \" " + WhoSummoned + "\".\nWith whatToDo = " + request.whatToDo);
-	if (WhoSummoned == "PopupPage")
-	{
-		console.log("Popup sended a message");
-		var m = sendResponse; // reasigning function (without it calling) for further use
-		if (request.whatToDo == "CheckIfDGTabIsAvailable")
+	
+	console.log(WhoSummoned + " sended a message");
+	var m = sendResponse; // reasigning function (without it calling) for further use
+	if (request.whatToDo == "CheckIfDGTabIsAvailable")
 		{
 			let tabs = browser.tabs.query({currentWindow: true}); // get all tabs from curent window
 			tabs.then(TabsParsing, onError);
@@ -23,36 +22,65 @@ function handleMessage(request, sender, sendResponse) {
 				}  
 				m({response: request.whatToDo,niziTabId: null}); // if the url wasnt find then we just sent "niziTabId" as null
 			}
-		}
-		if (request.whatToDo == "GetBeoutifyCheckboxVar")
+	}
+	if (request.whatToDo == "GetVars")//this is sending sendMessage
+	{
+		//{BeoutifyVar:0,HeaderVar:0,FooterVar:0,InformationVar:0,CampaignsVar:0}
+		var whatVars = request.whatVars;
+		try
 		{
-			try 
+			var vars = JSON.parse(localStorage.getItem("PopupVars"));
+			vars.BeoutifyVar;
+			var filteredVars = {};
+			for (var key in vars)
 			{
-				var vars = JSON.parse(localStorage.getItem('PopupVars'));
-				var myVar = vars.BeoutifyVar;
-				m({response: request.whatToDo,variable: myVar});
-			} 
-			catch (error) 
+				for (var el in whatVars) 
+				{
+					if (whatVars[el] == key)
+					{
+						filteredVars[key] = vars[key];break;
+					}
+				}
+			} //now filtering the output
+			//console.log(filteredVars);
+			m({response: request.whatToDo,variables: filteredVars});
+		}
+		catch (error)
+		{
+			var vars = {BeoutifyVar:1,HeaderVar:1,FooterVar:1,InformationVar:1,CampaignsVar:1}
+			localStorage.setItem("PopupVars", JSON.stringify(vars)); 
+			var filteredVars = {};
+			for (var key in vars)
 			{
-				// if item vars don't exist in localStorage of background script then i'll init it with default needed data
-				var vars = {BeoutifyVar:1,HeaderVar:1,FooterVar:1,InformationVar:0,CampaignsVar:0}
-				localStorage.setItem("PopupVars", JSON.stringify(vars)); 
-				m({response: request.whatToDo,variable: vars.BeoutifyVar});
+				for (var el in whatVars) 
+				{
+					if (whatVars[el] == key)
+					{
+						filteredVars[key] = vars[key];break;
+					}
+				}
+			}
+			m({response: request.whatToDo,variables: filteredVars});
+		}
+	}
+	if (request.whatToDo == "SetVars")
+	{
+		//{BeoutifyVar:0,HeaderVar:0,FooterVar:0,InformationVar:0,CampaignsVar:0}
+		var whatVars = request.whatVarsToChange;
+		var vars = JSON.parse(localStorage.getItem("PopupVars"));
+		for (var key in vars)
+		{
+			for (var el in whatVars) 
+			{
+				if (el == key)
+				{
+					vars[key] = whatVars[el];break;
+				}
 			}
 		}
-		if (request.whatToDo == "SetBeoutifyCheckboxVar")
-		{
-			var vars = JSON.parse(localStorage.getItem("PopupVars"));
-			vars.BeoutifyVar = request.changeTo;
-			localStorage.setItem("PopupVars",JSON.stringify(vars));
-		}
-		if (request.whatToDo == "GetOthersCheckboxVar")
-		{
-			var vars = JSON.parse(localStorage.getItem("PopupVars"));
-			delete vars.BeoutifyVar;
-			m({response: request.whatToDo,variables: JSON.stringify(vars)});
-		}
-		return true; // keep the messaging channel open for sendResponse
-		// i need this return to recreate it as an "return promis" and after this i need to paste all my code above ( the code from "checkifavailable")		
+		localStorage.setItem("PopupVars",JSON.stringify(vars));
 	}
+	return true; // keep the messaging channel open for sendResponse
+	// i need this return to recreate it as an "return promis" and after this i need to paste all my code above ( the code from "checkifavailable")		
+	
 }
