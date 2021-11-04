@@ -11,12 +11,9 @@ async function BeautifySubpageFunctionality()
 
 	var clases = document.getElementsByClassName("allBox");for(var i = 0; i < clases.length;i++){clases[i].style.display = "block";} // show boxes
 	// and now need to set switches acordingly to vars that would be stored in local.storage
-	var isTabAvailable =  browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"CheckIfDGTabIsAvailable"});// i would send this object to the background script 
-	await isTabAvailable.then(handleResponse, handleError); // becouse "handleResponse" have return this await would make programm to runc line by line even if this is async
+	await  browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"CheckIfDGTabIsAvailable"}).then(handleResponse, handleError);// i would send this object to the background script 
+	var vars = await browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["HeaderVar","FooterVar","InformationVar","CampaignsVar"],FromWho:"StylingVars"}).then(handleResponse, handleError); // by others i mean Header, footer, information and campaign
 
-	var getOtherVars = browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["HeaderVar","FooterVar","InformationVar","CampaignsVar"]}); // by others i mean Header, footer, information and campaign
-	var vars = await getOtherVars.then(handleResponse, handleError);
-	
 	if (vars.HeaderVar){document.getElementById("HeaderCheckbox").checked = true;} //setting the switches to it's positions
 	if (vars.FooterVar){document.getElementById("FooterCheckbox").checked = true;}
 	if (vars.InformationVar){document.getElementById("InformationCheckbox").checked = true;}
@@ -34,18 +31,16 @@ async function BeautifySubpageFunctionality()
 		if(document.getElementById('HeaderCheckbox').checked) 
 		{
 			//browser.tabs.executeScript({code : 'document.getElementById("game_header").style.display = "none";document.getElementById("footer").style.display = "none";browser.storage.local.set({["isBeautifySwitched"]:1})'});
-			browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"HeaderVar":1}}); // setting var acordingly to it state
-			var getGetBeoutifyVar = browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"]}); // checking if beoutifycheckbox is checked
-			var vars = await getGetBeoutifyVar.then(handleResponse, handleError); // if beoutifychecbox is checked then we modify the layout
-			if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'document.getElementById("game_header").style.display = "none";'});}
+			browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"HeaderVar":1},ToWho:"StylingVars"}); // setting var acordingly to it state
+			var vars = await browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"],FromWho:"StylingVars"}).then(handleResponse, handleError); // checking if beoutifycheckbox is checked
+			if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'document.getElementById("game_header").style.display = "none";'});}// if beoutifychecbox is checked then we modify the layout
 		}
 		else 
 		{	
 		//browser.tabs.executeScript({code: 'document.getElementById("game_header").style.display = "block";document.getElementById("footer").style.display = "block";browser.storage.local.set({["isBeautifySwitched"]:0})'});
-		browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"HeaderVar":0}});
-		var getGetBeoutifyVar = browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"]}); // by others i mean Header, footer, information and campaign
-		var vars = await getGetBeoutifyVar.then(handleResponse, handleError);
-		if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'document.getElementById("game_header").style.display = "block";'});}
+		browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"HeaderVar":0},ToWho:"StylingVars"});
+		var vars = await browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"],FromWho:"StylingVars"}).then(handleResponse, handleError); // by others i mean Header, footer, information and campaign
+		if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'document.getElementById("game_header").style.display = "block";'});}// if beoutifychecbox is checked then we modify the layout
 		}
 	}
 	
@@ -55,18 +50,16 @@ async function BeautifySubpageFunctionality()
 		if(document.getElementById('FooterCheckbox').checked) 
 		{
 			//browser.tabs.executeScript({code : 'document.getElementById("game_header").style.display = "none";document.getElementById("footer").style.display = "none";browser.storage.local.set({["isBeautifySwitched"]:1})'});
-			browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"FooterVar":1}}); // setting var acordingly to it state
-			var getGetBeoutifyVar = browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"]}); // checking if beoutifycheckbox is checked
-			var vars = await getGetBeoutifyVar.then(handleResponse, handleError); // if beoutifychecbox is checked then we modify the layout
-			if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'document.getElementById("footer").style.display = "none";'});}
+			browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"FooterVar":1},ToWho:"StylingVars"}); // setting var acordingly to it state
+			var vars = await browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"],FromWho:"StylingVars"}).then(handleResponse, handleError); // checking if beoutifycheckbox is checked
+			if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'document.getElementById("footer").style.display = "none";'});}// if beoutifychecbox is checked then we modify the layout
 		}
 		else 
 		{	
 		//browser.tabs.executeScript({code: 'document.getElementById("game_header").style.display = "block";document.getElementById("footer").style.display = "block";browser.storage.local.set({["isBeautifySwitched"]:0})'});
-		browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"FooterVar":0}});
-		var getGetBeoutifyVar = browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"]}); // by others i mean Header, footer, information and campaign
-		var vars = await getGetBeoutifyVar.then(handleResponse, handleError);
-		if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'document.getElementById("footer").style.display = "block";'});}
+		browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"FooterVar":0},ToWho:"StylingVars"});
+		var vars = await browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"],FromWho:"StylingVars"}).then(handleResponse, handleError); // by others i mean Header, footer, information and campaign
+		if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'document.getElementById("footer").style.display = "block";'});}// if beoutifychecbox is checked then we modify the layout
 		}
 	}
 
@@ -76,18 +69,16 @@ async function BeautifySubpageFunctionality()
 		if(document.getElementById('InformationCheckbox').checked) 
 		{
 			//browser.tabs.executeScript({code : 'document.getElementById("game_header").style.display = "none";document.getElementById("footer").style.display = "none";browser.storage.local.set({["isBeautifySwitched"]:1})'});
-			browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"InformationVar":1}}); // setting var acordingly to it state
-			var getGetBeoutifyVar = browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"]}); // checking if beoutifycheckbox is checked
-			var vars = await getGetBeoutifyVar.then(handleResponse, handleError); // if beoutifychecbox is checked then we modify the layout
-			if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'var contents = document.getElementById("right").contentWindow.document.getElementById("contents");var info = contents.children[0].children[0].children[0].children[2].style.display = "none";var infobanner = contents.children[0].children[0].children[0].children[3].style.display = "none";'});}
+			browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"InformationVar":1},ToWho:"StylingVars"}); // setting var acordingly to it state
+			var vars = await browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"],FromWho:"StylingVars"}).then(handleResponse, handleError); // checking if beoutifycheckbox is checked
+			if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'var contents = document.getElementById("right").contentWindow.document.getElementById("contents");var info = contents.children[0].children[0].children[0].children[2].style.display = "none";var infobanner = contents.children[0].children[0].children[0].children[3].style.display = "none";'});}// if beoutifychecbox is checked then we modify the layout
 		}
 		else 
 		{	
 		//browser.tabs.executeScript({code: 'document.getElementById("game_header").style.display = "block";document.getElementById("footer").style.display = "block";browser.storage.local.set({["isBeautifySwitched"]:0})'});
-		browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"InformationVar":0}});
-		var getGetBeoutifyVar = browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"]}); // by others i mean Header, footer, information and campaign
-		var vars = await getGetBeoutifyVar.then(handleResponse, handleError);
-		if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'var contents = document.getElementById("right").contentWindow.document.getElementById("contents");var info = contents.children[0].children[0].children[0].children[2].style.display = "block";var infobanner = contents.children[0].children[0].children[0].children[3].style.display = "block";'});}
+		browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"InformationVar":0},ToWho:"StylingVars"});
+		var vars = await browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"],FromWho:"StylingVars"}).then(handleResponse, handleError); // by others i mean Header, footer, information and campaign
+		if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'var contents = document.getElementById("right").contentWindow.document.getElementById("contents");var info = contents.children[0].children[0].children[0].children[2].style.display = "block";var infobanner = contents.children[0].children[0].children[0].children[3].style.display = "block";'});}// if beoutifychecbox is checked then we modify the layout
 		}
 	}
 
@@ -97,18 +88,16 @@ async function BeautifySubpageFunctionality()
 		if(document.getElementById('CampaignsCheckbox').checked) 
 		{
 			//browser.tabs.executeScript({code : 'document.getElementById("game_header").style.display = "none";document.getElementById("footer").style.display = "none";browser.storage.local.set({["isBeautifySwitched"]:1})'});
-			browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"CampaignsVar":1}}); // setting var acordingly to it state
-			var getGetBeoutifyVar = browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"]}); // checking if beoutifycheckbox is checked
-			var vars = await getGetBeoutifyVar.then(handleResponse, handleError); // if beoutifychecbox is checked then we modify the layout
-			if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'var contents = document.getElementById("right").contentWindow.document.getElementById("contents");var camp = contents.children[0].children[0].children[0].children[4].style.display = "none";var campbanner = contents.children[0].children[0].children[0].children[5].style.display = "none";'});}
+			browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"CampaignsVar":1},ToWho:"StylingVars"}); // setting var acordingly to it state
+			var vars = await browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"],FromWho:"StylingVars"}).then(handleResponse, handleError); // checking if beoutifycheckbox is checked
+			if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'var contents = document.getElementById("right").contentWindow.document.getElementById("contents");var camp = contents.children[0].children[0].children[0].children[4].style.display = "none";var campbanner = contents.children[0].children[0].children[0].children[5].style.display = "none";'});}// if beoutifychecbox is checked then we modify the layout
 		}
 		else 
 		{	
 		//browser.tabs.executeScript({code: 'document.getElementById("game_header").style.display = "block";document.getElementById("footer").style.display = "block";browser.storage.local.set({["isBeautifySwitched"]:0})'});
-		browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"CampaignsVar":0}});
-		var getGetBeoutifyVar = browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"]}); // by others i mean Header, footer, information and campaign
-		var vars = await getGetBeoutifyVar.then(handleResponse, handleError);
-		if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'var contents = document.getElementById("right").contentWindow.document.getElementById("contents");var camp = contents.children[0].children[0].children[0].children[4].style.display = "block";var campbanner = contents.children[0].children[0].children[0].children[5].style.display = "block";'});}
+		browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"SetVars",whatVarsToChange:{"CampaignsVar":0},ToWho:"StylingVars"});
+		var vars = await browser.runtime.sendMessage({sender:"Beautify_PopupSubpage", whatToDo:"GetVars",whatVars:["BeoutifyVar"],FromWho:"StylingVars"}).then(handleResponse, handleError); // by others i mean Header, footer, information and campaign
+		if (vars.BeoutifyVar){browser.tabs.executeScript(NiziTabId,{code:'var contents = document.getElementById("right").contentWindow.document.getElementById("contents");var camp = contents.children[0].children[0].children[0].children[4].style.display = "block";var campbanner = contents.children[0].children[0].children[0].children[5].style.display = "block";'});}// if beoutifychecbox is checked then we modify the layout
 		}
 	}
 }

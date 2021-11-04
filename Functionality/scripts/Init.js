@@ -1,9 +1,10 @@
 //Those three from below is some init lines, it'll need to be and in other bot like scripts
 //Be carefull when creating the content scripts, cuz when u make a mistake the console wouldn't show it to u and that is creating some trouble
 //console.log("Now is running the content scrpt init.js");
+/*
 var t0 = performance.now()
 if(sessionStorage.getItem("isScriptRunning")){console.log("isScriptRunning are already created")}
-else {sessionStorage.setItem("isScriptRunning","Run");/*console.log("isScriptRunning arent created, creating it rn");*/}
+else {sessionStorage.setItem("isScriptRunning","Run");}
 if (document.getElementById("OverlapDiv") == null) 
 {
 	//console.log("The div does not exists then i'm creating it.");
@@ -115,3 +116,62 @@ if (document.getElementById("ButtonsDiv") == null)
 var t1 = performance.now()
 console.log("Call to Init.js took " + (t1 - t0) + " milliseconds.")
 
+*/
+
+
+console.log("Init injected");
+browser.runtime.onMessage.addListener(handleMessage);
+
+function handleMessage(request, sender, sendResponse) {
+	var WhoSummoned = request.sender;
+	console.log("Message from \"" + WhoSummoned + "\".\nWith whatToDo = " + request.whatToDo);
+	var m = sendResponse; // reasigning function (without it calling) for further use
+	switch(request.whatToDo)
+	{
+		case "GetVars"://this is sending sendMessage
+			{
+				//WorkingVars: {LikeWorking:0,ChatWorking:0} // it would be stored in session storage
+				var whatVars = request.whatVars;
+				var vars;
+				try
+				{	
+					vars = JSON.parse(sessionStorage.getItem("WorkingVars"));
+					vars.LikeWorking;
+					//console.log(vars);
+					var filteredVars = {};
+					for (var key in vars)
+					{
+						for (var el in whatVars) 
+						{
+							if (whatVars[el] == key)
+							{
+								filteredVars[key] = vars[key];break;
+							}
+						}
+					} //now filtering the output
+					console.log(filteredVars);
+					m({response: request.whatToDo,variables: filteredVars});
+				}
+				catch (error)
+				{
+					vars = {LikeWorking:0,ChatWorking:0};
+					sessionStorage.setItem("WorkingVars", JSON.stringify(vars));
+					var filteredVars = {};
+					for (var key in vars)
+					{
+						for (var el in whatVars) 
+						{
+							if (whatVars[el] == key)
+							{
+								filteredVars[key] = vars[key];break;
+							}
+						}
+					}
+					console.log(filteredVars);
+					m({response: request.whatToDo,variables: filteredVars});
+				}
+				return true; // keep the messaging channel open for sendResponse
+				break;
+			}
+	}
+}

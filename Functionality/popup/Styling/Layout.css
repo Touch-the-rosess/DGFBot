@@ -28,23 +28,25 @@
 }
 
 .allBtn {
-	font-weight: bold;
+	/*font-weight: bold;
   	background-color: #ffd341;
-	color: #000;/*#82c3db;*/
+	color: #000;
   	border-radius: 12px;
   	border: transparent;
   	font-size: 11px;
-  	height: 23px;
-	width: 42px;
-	box-shadow: 0 2px #999;
+	box-shadow: 0 2px #999;*/
 	float: right;
-}
+	height: 23px;
+	width: 42px;
+	}
 
-.allBtn:active {
+/*.allBtn:active {
   background-color: #ffae08;
   box-shadow: 0 1px #666;
   transform: translateY(1px);
-}
+}*/
+
+
 
 .text1 {
 	float: left;
@@ -71,6 +73,8 @@
 	border-bottom-right-radius: 20px;
 	border-bottom-left-radius: 20px;
 }
+
+
 /*	END of Back button*/
 /*	END of beautify help page*/
 
