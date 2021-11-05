@@ -7,6 +7,11 @@ We try to make an add-on that would do for you all boring things in game "Dream 
   - Spending all group points 
   - And much more.
 
+### Logging for Nizi discord users who want to know what is dev doing right now.
+  Right now the bot is on stage of developing. It have the ability just to hide some ingame elements to make the playing more comfortable.
+  At the moment i'm working on like script. This script is ment to Like all you'r FL and after it likes all FL it'll start to like random ppl ti'll it reach max cap of the day. Cuz this is just starting it'l get a little time ti'l i finish it ( cuz before creation needs some preparation to minimise errors ). I'l try my best to do a thing that would help all of us.
+  Btw, this is just a clicker but smart, this is not some kind of hacking thing.
+
 
 ### Technologies used
   - HTML
